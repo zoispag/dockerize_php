@@ -1,8 +1,9 @@
 # Docker for PHP
 
-### Docker opinionated ready-to-use containers for PHP apps
+> Docker ready-to-use containers for PHP apps
+> opinionated for Laravel apps
 
-Contains:
+### Contains:
 - nginx
 - php-fpm (php 7.2)
 - mysql 5.6
@@ -11,12 +12,14 @@ Contains:
 - node.js
 - php extensions: mysql & sqlite3
 
-Env variables:
+### Env variables:
 - Set APP_PORT to access the app from `localhost:MYSQL_PORT`
 - Set MYSQL_PORT to access the sql database with SequelPro with `host = localhost` and `port = MYSQL_PORT`
 
 Setup:
 - Put your PHP app inside the `workspace` dir
+- `cp .env.example .env`
+- Set your environment variables
 - Execute `docker-compose build` from the `deployment` dir
 - Once finished, run `docker-compose up -d` to start the containers
 - First time run will take longer (some images will have to download)

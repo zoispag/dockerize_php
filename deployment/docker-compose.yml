@@ -1,0 +1,43 @@
+version: "3.1"
+services:
+
+  mysql:
+    image: mysql:5.6
+    container_name: mysql-db
+    working_dir: /application
+    volumes:
+      - ../database:/var/lib/mysql
+      - ../workspace:/application
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - "${MYSQL_PORT}:3306"
+
+  webserver:
+    image: nginx:alpine
+    container_name: nginx
+    working_dir: /application
+    volumes:
+        - ../workspace:/application
+        - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+     - "${APP_PORT}:80"
+
+  php-fpm:
+    build: phpdocker/php-fpm
+    container_name: php-server
+    working_dir: /application
+    volumes:
+      - ../workspace:/application
+      - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+
+  mailcatcher:
+    image: jeanberu/mailcatcher
+    container_name: mailcatcher
+    restart: always
+    ports:
+      - "1025:1025"
+      - "1080:1080"
