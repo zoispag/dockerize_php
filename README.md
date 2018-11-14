@@ -17,7 +17,7 @@
 
 ### Setup:
 - Put your PHP app inside the `workspace` dir
-- `cp .env.example .env`
+- `cd deployment && cp .env.example .env`
 - Set your environment variables
 - Execute `docker-compose build` from the `deployment` dir
 - Once finished, run `docker-compose up -d` to start the containers
